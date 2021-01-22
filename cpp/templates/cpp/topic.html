@@ -1,0 +1,27 @@
+{%extends 'home/base.html'%}
+{%block content%}
+
+{%for topic in topics%}
+<a href="{%url 'cpp:detail' topic.id%}"><h1>{{topic.title}}</h1></a>
+<p>{{topic.detail|striptags|truncatechars:100}}</p>
+{%endfor%}
+<div class="pagination">
+    <span class="step-links">
+        {% if topics.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+        <br>
+            <a href="?page={{ topics.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ topics.number }} of {{ topics.paginator.num_pages }}.
+        </span>
+
+        {% if topics.has_next %}
+            <a href="?page={{ topics.next_page_number }}">next</a>
+        <br>
+            <a href="?page={{ topics.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{%endblock%}
